@@ -1,0 +1,46 @@
+{
+  "name": "twitches",
+  "version": "0.0.1",
+  "description": "React + Tailwind + Stitches",
+  "main": "dist/index.cjs",
+  "type": "module",
+  "source": "src/index.ts",
+  "exports": {
+    "require": "./dist/index.cjs",
+    "default": "./dist/index.modern.js",
+    "types": "./dist/index.d.ts"
+  },
+  "types": "dist/index.d.ts",
+  "module": "./dist/index.module.js",
+  "unpkg": "./dist/index.umd.js",
+  "scripts": {
+    "dev": "microbundle watch",
+    "build": "rm -rf dist && microbundle"
+  },
+  "keywords": [
+    "react",
+    "tailwind",
+    "stitches",
+    "ui",
+    "components"
+  ],
+  "author": "Dusan Jovanov",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/deepmerge": "^2.2.0",
+    "@types/react": "^18.0.26",
+    "microbundle": "^0.15.1"
+  },
+  "peerDependencies": {
+    "react": ">=16.4"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
+    "@radix-ui/react-switch": "^1.0.1",
+    "@radix-ui/react-tabs": "^1.0.1",
+    "@radix-ui/react-tooltip": "^1.0.2",
+    "@stitches/react": "^1.2.8",
+    "deepmerge": "^4.2.2"
+  }
+}
