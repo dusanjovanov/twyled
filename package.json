@@ -1,7 +1,7 @@
 {
-  "name": "twitches",
+  "name": "twyled",
   "version": "0.0.1",
-  "description": "React + Tailwind + Stitches",
+  "description": "Tailwind + Styled System",
   "main": "dist/index.cjs",
   "type": "module",
   "source": "src/index.ts",
