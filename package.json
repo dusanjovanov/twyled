@@ -1,6 +1,6 @@
 {
   "name": "twyled",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "React UI library inspired by Tailwind + Styled System",
   "keywords": [
     "react",
@@ -20,8 +20,8 @@
   "source": "src/index.ts",
   "exports": {
     "require": "./dist/index.cjs",
-    "default": "./dist/index.modern.js",
-    "types": "./dist/index.d.ts"
+    "types": "./dist/index.d.ts",
+    "default": "./dist/index.modern.js"
   },
   "types": "dist/index.d.ts",
   "module": "./dist/index.module.js",
