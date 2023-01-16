@@ -1,7 +1,20 @@
 {
   "name": "twyled",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "React UI library inspired by Tailwind + Styled System",
+  "keywords": [
+    "react",
+    "ui",
+    "primitives",
+    "components",
+    "tailwind",
+    "styled-system"
+  ],
+  "author": "Dusan Jovanov",
+  "license": "MIT",
+  "repository": {
+    "url": "https://github.com/dusanjovanov/twyled"
+  },
   "main": "dist/index.cjs",
   "type": "module",
   "source": "src/index.ts",
@@ -17,16 +30,6 @@
     "dev": "microbundle watch",
     "build": "rm -rf dist && microbundle"
   },
-  "keywords": [
-    "react",
-    "ui",
-    "primitives",
-    "components",
-    "tailwind",
-    "styled-system"
-  ],
-  "author": "Dusan Jovanov",
-  "license": "MIT",
   "devDependencies": {
     "@types/react": "^18.0.26",
     "microbundle": "^0.15.1"
