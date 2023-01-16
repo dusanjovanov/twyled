@@ -32,10 +32,19 @@ export const createPropsToCSSObject = (theme: any) => {
       else {
         const propFn = propMap[prop];
 
-        cssObject = {
-          ...cssObject,
-          ...propFn({ prop, value, theme, cssObject }),
-        };
+        if (propFn === 1) {
+          cssObject = {
+            ...cssObject,
+            [prop]: value,
+          };
+        }
+        //
+        else {
+          cssObject = {
+            ...cssObject,
+            ...propFn(value, theme),
+          };
+        }
       }
     }
     return cssObject;

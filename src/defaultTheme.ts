@@ -1,3 +1,5 @@
+import { CSSObject } from "@emotion/react";
+
 export const defaultColorsTheme = {
   inherit: "inherit",
   current: "currentColor",
@@ -227,6 +229,7 @@ export const defaultColorsTheme = {
 };
 
 export const defaultSpacingTheme = {
+  auto: "auto",
   px: "1px",
   "0": "0px",
   "0.5": "0.125rem",
@@ -264,12 +267,75 @@ export const defaultSpacingTheme = {
   "96": "24rem",
 };
 
+export const defaultFontFamilyTheme = {
+  sans: `ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"`,
+  serif: `ui-serif, Georgia, Cambria, "Times New Roman", Times, serif`,
+  mono: `ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace`,
+};
+
+export const defaultFontSizeTheme = {
+  xs: "0.75rem",
+  sm: "0.875rem",
+  base: "1rem",
+  lg: "1.125rem",
+  xl: "1.25rem",
+  "2xl": "1.5rem",
+  "3xl": "1.875rem",
+  "4xl": "2.25rem",
+  "5xl": "3rem",
+  "6xl": "3.75rem",
+  "7xl": "4.5rem",
+  "8xl": "6rem",
+  "9xl": "8rem",
+};
+
+export const defaultFontWeightTheme = {
+  thin: "100",
+  extralight: "200",
+  light: "300",
+  normal: "400",
+  medium: "500",
+  semibold: "600",
+  bold: "700",
+  extrabold: "800",
+  black: "900",
+};
+
+export const defaultLineHeightTheme = {
+  none: "1",
+  tight: "1.25",
+  snug: "1.375",
+  normal: "1.5",
+  relaxed: "1.625",
+  loose: "2",
+  "3": ".75rem",
+  "4": "1rem",
+  "5": "1.25rem",
+  "6": "1.5rem",
+  "7": "1.75rem",
+  "8": "2rem",
+  "9": "2.25rem",
+  "10": "2.5rem",
+};
+
 export const defaultBorderWidthTheme = {
   "0": "0px",
   "1": "1px",
   "2": "2px",
   "4": "4px",
   "8": "8px",
+};
+
+export const defaultBorderRadiusTheme = {
+  none: "0px",
+  sm: "0.125rem",
+  default: "0.25rem",
+  md: "0.375rem",
+  lg: "0.5rem",
+  xl: "0.75rem",
+  "2xl": "1rem",
+  "3xl": "1.5rem",
+  full: "9999px",
 };
 
 export const defaultBreakPointsTheme = {
@@ -280,496 +346,41 @@ export const defaultBreakPointsTheme = {
   "2xl": "1536px",
 };
 
-export const defaultTransitionDurationTheme = {
-  "75": "75ms",
-  "100": "100ms",
-  "150": "150ms",
-  "200": "200ms",
-  "300": "300ms",
-  "500": "500ms",
-  "700": "700ms",
-  "1000": "1000ms",
+export const defaultKeyFramesTheme = {
+  spin: {
+    to: {
+      transform: "rotate(360deg)",
+    },
+  },
+  ping: {
+    "75%, 100%": {
+      transform: "scale(2)",
+      opacity: "0",
+    },
+  },
+  pulse: {
+    "50%": {
+      opacity: ".5",
+    },
+  },
+  bounce: {
+    "0%, 100%": {
+      transform: "translateY(-25%)",
+      animationTimingFunction: "cubic-bezier(0.8,0,1,1)",
+    },
+    "50%": {
+      transform: "none",
+      animationTimingFunction: "cubic-bezier(0,0,0.2,1)",
+    },
+  },
 };
 
-/** top, bottom, left, right */
-export const defaultPositionSideTheme = {
-  ...defaultSpacingTheme,
+export const defaultZIndexTheme = {
   auto: "auto",
-  "1/2": "50%",
-  "1/3": "33.333333%",
-  "2/3": "66.666667%",
-  "1/4": "25%",
-  "2/4": "50%",
-  "3/4": "75%",
-  full: "100%",
+  "0": "0",
+  "10": "10",
+  "20": "20",
+  "30": "30",
+  "40": "40",
+  "50": "50",
 };
-
-export const defaultBorderStyleTheme = {
-  none: "none",
-  solid: "solid",
-  dashed: "dashed",
-  dotted: "dotted",
-  double: "double",
-  groove: "groove",
-  ridge: "ridge",
-  inset: "inset",
-  outset: "outset",
-};
-
-export const defaultTheme = {
-  breakPoints: {
-    ...defaultBreakPointsTheme,
-  },
-  // COLORS
-  backgroundColor: {
-    ...defaultColorsTheme,
-  },
-  color: {
-    ...defaultColorsTheme,
-  },
-  fill: {
-    ...defaultColorsTheme,
-  },
-  // FONT
-  fontFamily: {
-    sans: `ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"`,
-    serif: `ui-serif, Georgia, Cambria, "Times New Roman", Times, serif`,
-    mono: `ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace`,
-  },
-  fontSize: {
-    xs: "0.75rem",
-    sm: "0.875rem",
-    base: "1rem",
-    lg: "1.125rem",
-    xl: "1.25rem",
-    "2xl": "1.5rem",
-    "3xl": "1.875rem",
-    "4xl": "2.25rem",
-    "5xl": "3rem",
-    "6xl": "3.75rem",
-    "7xl": "4.5rem",
-    "8xl": "6rem",
-    "9xl": "8rem",
-  },
-  fontWeight: {
-    thin: "100",
-    extralight: "200",
-    light: "300",
-    normal: "400",
-    medium: "500",
-    semibold: "600",
-    bold: "700",
-    extrabold: "800",
-    black: "900",
-  },
-  fontStyle: {
-    italic: "italic",
-    normal: "normal",
-  },
-  lineHeight: {
-    none: "1",
-    tight: "1.25",
-    snug: "1.375",
-    normal: "1.5",
-    relaxed: "1.625",
-    loose: "2",
-    "3": ".75rem",
-    "4": "1rem",
-    "5": "1.25rem",
-    "6": "1.5rem",
-    "7": "1.75rem",
-    "8": "2rem",
-    "9": "2.25rem",
-    "10": "2.5rem",
-  },
-  // SPACING
-  padding: {
-    ...defaultSpacingTheme,
-  },
-  margin: {
-    ...defaultSpacingTheme,
-    auto: "auto",
-  },
-  width: {
-    ...defaultSpacingTheme,
-    auto: "auto",
-    "1/2": "50%",
-    "1/3": "33.333333%",
-    "2/3": "66.666667%",
-    "1/4": "25%",
-    "2/4": "50%",
-    "3/4": "75%",
-    "1/5": "20%",
-    "2/5": "40%",
-    "3/5": "60%",
-    "4/5": "80%",
-    "1/6": "16.666667%",
-    "2/6": "33.333333%",
-    "3/6": "50%",
-    "4/6": "66.666667%",
-    "5/6": "83.333333%",
-    "1/12": "8.333333%",
-    "2/12": "16.666667%",
-    "3/12": "25%",
-    "4/12": "33.333333%",
-    "5/12": "41.666667%",
-    "6/12": "50%",
-    "7/12": "58.333333%",
-    "8/12": "66.666667%",
-    "9/12": "75%",
-    "10/12": "83.333333%",
-    "11/12": "91.666667%",
-    full: "100%",
-    screen: "100vw",
-    min: "min-content",
-    max: "max-content",
-    fit: "fit-content",
-  },
-  minWidth: {
-    "0": "0px",
-    full: "100%",
-    min: "min-content",
-    max: "max-content",
-    fit: "fit-content",
-  },
-  maxWidth: {
-    none: "none",
-    "0": "0rem",
-    xs: "20rem",
-    sm: "24rem",
-    md: "28rem",
-    lg: "32rem",
-    xl: "36rem",
-    "2xl": "42rem",
-    "3xl": "48rem",
-    "4xl": "56rem",
-    "5xl": "64rem",
-    "6xl": "72rem",
-    "7xl": "80rem",
-    full: "100%",
-    min: "min-content",
-    max: "max-content",
-    fit: "fit-content",
-    prose: "65ch",
-  },
-  height: {
-    auto: "auto",
-    "1/2": "50%",
-    "1/3": "33.333333%",
-    "2/3": "66.666667%",
-    "1/4": "25%",
-    "2/4": "50%",
-    "3/4": "75%",
-    "1/5": "20%",
-    "2/5": "40%",
-    "3/5": "60%",
-    "4/5": "80%",
-    "1/6": "16.666667%",
-    "2/6": "33.333333%",
-    "3/6": "50%",
-    "4/6": "66.666667%",
-    "5/6": "83.333333%",
-    full: "100%",
-    screen: "100vh",
-    min: "min-content",
-    max: "max-content",
-    fit: "fit-content",
-  },
-  minHeight: {
-    "0": "0px",
-    full: "100%",
-    screen: "100vh",
-    min: "min-content",
-    max: "max-content",
-    fit: "fit-content",
-  },
-  maxHeight: {
-    ...defaultSpacingTheme,
-    full: "100%",
-    screen: "100vh",
-    min: "min-content",
-    max: "max-content",
-    fit: "fit-content",
-  },
-  borderRadius: {
-    none: "0px",
-    sm: "0.125rem",
-    default: "0.25rem",
-    md: "0.375rem",
-    lg: "0.5rem",
-    xl: "0.75rem",
-    "2xl": "1rem",
-    "3xl": "1.5rem",
-    full: "9999px",
-  },
-  display: {
-    block: "block",
-    "inline-block": "inline-block",
-    inline: "inline",
-    flex: "flex",
-    "inline-flex": "inline-flex",
-    table: "table",
-    "inline-table": "inline-table",
-    "table-caption": "table-caption",
-    "table-cell": "table-cell",
-    "table-column": "table-column",
-    "table-column-group": "table-column-group",
-    "table-footer-group": "table-footer-group",
-    "table-header-group": "table-header-group",
-    "table-row-group": "table-row-group",
-    "table-row": "table-row",
-    "flow-root": "flow-root",
-    grid: "grid",
-    "inline-grid": "inline-grid",
-    contents: "contents",
-    "list-item": "list-item",
-    none: "none",
-  },
-  // FLEX
-  alignItems: {
-    center: "center",
-    start: "flex-start",
-    end: "flex-end",
-    baseline: "baseline",
-    stretch: "stretch",
-  },
-  justifyContent: {
-    center: "center",
-    start: "flex-start",
-    end: "flex-end",
-    between: "space-between",
-    around: "space-around",
-    evenly: "space-evenly",
-  },
-  flexDirection: {
-    row: "row",
-    "row-reverse": "row-reverse",
-    column: "column",
-    "column-reverse": "column-reverse",
-  },
-  flexWrap: {
-    wrap: "wrap",
-    reverse: "wrap-reverse",
-    nowrap: "nowrap",
-  },
-  gap: {
-    ...defaultSpacingTheme,
-  },
-  flexGrow: { "0": 0, "1": 1 },
-  flexShrink: { "0": 0, "1": 1 },
-  flexBasis: {
-    ...defaultSpacingTheme,
-  },
-  flex: { "1": "1 1 0%", auto: "1 1 auto", initial: "0 1 auto", none: "none" },
-  justifySelf: {
-    auto: "auto",
-    start: "start",
-    end: "end",
-    center: "center",
-  },
-  alignSelf: {
-    auto: "auto",
-    start: "flex-start",
-    end: "flex-end",
-    center: "center",
-    stretch: "stretch",
-    baseline: "baseline",
-  },
-  order: {
-    first: "-9999",
-    last: "9999",
-    none: "0",
-    "1": "1",
-    "2": "2",
-    "3": "3",
-    "4": "4",
-    "5": "5",
-    "6": "6",
-    "7": "7",
-    "8": "8",
-    "9": "9",
-    "10": "10",
-    "11": "11",
-    "12": "12",
-  },
-  // BORDER
-  borderWidth: {
-    ...defaultBorderWidthTheme,
-  },
-  borderStyle: {
-    ...defaultBorderStyleTheme,
-  },
-  borderColor: {
-    ...defaultColorsTheme,
-  },
-  // OUTLINE
-  outlineWidth: {
-    ...defaultBorderWidthTheme,
-  },
-  outlineStyle: {
-    none: "none",
-    auto: "auto",
-    dotted: "dotted",
-    dashed: "dashed",
-    solid: "solid",
-    double: "double",
-    groove: "groove",
-    ridge: "ridge",
-    inset: "inset",
-    outset: "outset",
-  },
-  outlineColor: {
-    ...defaultColorsTheme,
-  },
-  outlineOffset: {
-    ...defaultBorderWidthTheme,
-  },
-  // CURSOR
-  cursor: {
-    auto: "auto",
-    default: "default",
-    pointer: "pointer",
-    wait: "wait",
-    text: "text",
-    move: "move",
-    help: "help",
-    "not-allowed": "not-allowed",
-    none: "none",
-    "context-menu": "context-menu",
-    progress: "progress",
-    cell: "cell",
-    crosshair: "crosshair",
-    "vertical-text": "vertical-text",
-    alias: "alias",
-    copy: "copy",
-    "no-drop": "no-drop",
-    grab: "grab",
-    grabbing: "grabbing",
-    "all-scroll": "all-scroll",
-    "col-resize": "col-resize",
-    "row-resize": "row-resize",
-    "n-resize": "n-resize",
-    "e-resize": "e-resize",
-    "s-resize": "s-resize",
-    "w-resize": "w-resize",
-    "ne-resize": "ne-resize",
-    "nw-resize": "nw-resize",
-    "se-resize": "se-resize",
-    "sw-resize": "sw-resize",
-    "ew-resize": "ew-resize",
-    "ns-resize": "ns-resize",
-    "nesw-resize": "nesw-resize",
-    "nwse-resize": "nwse-resize",
-    "zoom-in": "zoom-in",
-    "zoom-out": "zoom-out",
-  },
-  // TRANSITION
-  transitionProperty: {
-    none: "none",
-    all: "all",
-    default:
-      "color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter",
-    colors:
-      "color, background-color, border-color, text-decoration-color, fill, stroke",
-    opacity: "opacity",
-    shadow: "box-shadow",
-    transform: "transform",
-  },
-  transitionDuration: {
-    ...defaultTransitionDurationTheme,
-  },
-  transitionDelay: {
-    ...defaultTransitionDurationTheme,
-  },
-  transitionTimingFunction: {
-    linear: "linear",
-    ease: "ease",
-    "ease-out": "ease-out",
-    "ease-in-out": "ease-in-out",
-    "step-start": "step-start",
-    "step-end": "step-end",
-  },
-  // ANIMATIONS
-  keyframes: {
-    spin: {
-      to: {
-        transform: "rotate(360deg)",
-      },
-    },
-    ping: {
-      "75%, 100%": {
-        transform: "scale(2)",
-        opacity: "0",
-      },
-    },
-    pulse: {
-      "50%": {
-        opacity: ".5",
-      },
-    },
-    bounce: {
-      "0%, 100%": {
-        transform: "translateY(-25%)",
-        animationTimingFunction: "cubic-bezier(0.8,0,1,1)",
-      },
-      "50%": {
-        transform: "none",
-        animationTimingFunction: "cubic-bezier(0,0,0.2,1)",
-      },
-    },
-  },
-  // POSITION
-  position: {
-    static: "static",
-    relative: "relative",
-    absolute: "absolute",
-    fixed: "fixed",
-    sticky: "sticky",
-  },
-  top: {
-    ...defaultPositionSideTheme,
-  },
-  bottom: {
-    ...defaultPositionSideTheme,
-  },
-  left: {
-    ...defaultPositionSideTheme,
-  },
-  right: {
-    ...defaultPositionSideTheme,
-  },
-  // VISIBILITY
-  visibility: {
-    visible: "visible",
-    hidden: "hidden",
-    collapse: "collapse",
-  },
-  // Z-INDEX
-  zIndex: {
-    auto: "auto",
-    "0": "0",
-    "10": "10",
-    "20": "20",
-    "30": "30",
-    "40": "40",
-    "50": "50",
-  },
-  // OVERFLOW
-  overflow: {
-    auto: "auto",
-    hidden: "hidden",
-    clip: "clip",
-    visible: "visible",
-    scroll: "scroll",
-  },
-  // LISTS
-  listStyleType: {
-    none: "none",
-    disc: "disc",
-    decimal: "decimal",
-  },
-};
-
-export type DefaultTheme = typeof defaultTheme;
-
-export type GenericTheme = Partial<Record<keyof DefaultTheme, any>>;

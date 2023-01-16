@@ -1,51 +1,45 @@
-import { keyframes as emotionKeyframes } from "@emotion/react";
-import styled from "@emotion/styled";
-import deepMerge from "deepmerge";
+import { Interpolation } from "@emotion/react";
+import styled, { StyledComponent } from "@emotion/styled";
 import React from "react";
-import { defaultTheme, GenericTheme } from "./defaultTheme";
 import { propMap, pseudoSelectorsMap } from "./propMaps";
 import { createPropsToCSSObject } from "./propsToCSS";
-import { CSSProps, Theme as MergedTheme } from "./types";
+import { CSSProps, GenericTheme } from "./types";
 import { isMediaQueryProp } from "./utils";
 
 const propsToSkip = {
   as: 1,
   theme: 1,
+  css: 1,
 };
 
 type GenericVariants<Theme extends GenericTheme> = Record<
   string,
-  Record<string, CSSProps<MergedTheme<Theme>>>
+  Record<string, CSSProps<Theme>>
 >;
 
-type VariantProps<
-  Theme extends GenericTheme,
-  Variants extends GenericVariants<Theme>
-> = Omit<
-  Partial<{
-    [VariantGroup in keyof Variants]: keyof Variants[VariantGroup];
-  }>,
-  "children"
->;
+type VariantProps<Variants> = Partial<{
+  [VariantGroup in keyof Variants]: keyof Variants[VariantGroup];
+}>;
 
-type TwyledProps<
-  Theme extends GenericTheme,
-  Variants extends GenericVariants<Theme>
-> = CSSProps<MergedTheme<Theme>> & VariantProps<Theme, Variants>;
+type CSSProp = {
+  css?: Interpolation<any>;
+};
+
+type TwyledProps<Theme extends GenericTheme, Variants> = CSSProps<Theme> &
+  VariantProps<Variants> &
+  CSSProp;
 
 type TwyledComponentProps<
   ElementType extends React.ElementType,
   Theme extends GenericTheme,
-  Variants extends GenericVariants<Theme>
-> = React.ComponentPropsWithRef<ElementType> & TwyledProps<Theme, Variants>;
+  Variants
+> = React.ComponentPropsWithRef<ElementType> &
+  TwyledProps<Theme, Variants> & { children?: React.ReactNode };
 
-type TwyledOptions<
-  Theme extends GenericTheme,
-  Variants extends GenericVariants<Theme>
-> = Partial<{
+type TwyledOptions<Theme extends GenericTheme, Variants> = Partial<{
   variants: Variants;
-  defaultVariants: VariantProps<Theme, Variants>;
-  defaults: CSSProps<MergedTheme<Theme>>;
+  defaultVariants: VariantProps<Variants>;
+  defaults: CSSProps<Theme> & CSSProp;
   displayName: string;
 }>;
 
@@ -57,44 +51,23 @@ const createShouldForwardProp = (variants) => (prop) =>
   !variants[prop];
 
 export const createTwyled = <Theme extends GenericTheme>(theme: Theme) => {
-  const t = deepMerge(defaultTheme, theme);
+  // const keyframes = {};
+  // for (const [name, keyframe] of Object.entries(theme.keyframes)) {
+  //   keyframes[name] = emotionKeyframes(keyframe as any);
+  // }
 
-  const keyframes = {};
-  for (const [name, keyframe] of Object.entries(t.keyframes)) {
-    keyframes[name] = emotionKeyframes(keyframe as any);
-  }
-
-  const twyled = <
-    ElementType extends React.ElementType,
-    Variants extends GenericVariants<MergedTheme<Theme>> = {}
-  >(
+  const twyled = <ElementType extends React.ElementType, Variants>(
     elementType: ElementType,
     options?: TwyledOptions<Theme, Variants>
   ) => {
-    const {
-      variants = {},
-      defaultVariants = {},
-      defaults = {},
-    } = options ?? {
-      variants: {},
-      defaultVariants: {},
-      defaults: {},
-    };
+    const { variants = {}, defaultVariants = {}, defaults } = options ?? {};
     const shouldForwardProp = createShouldForwardProp(variants);
 
     const createStyled = styled(elementType as any, {
       shouldForwardProp,
     });
-    let StyledComponent = elementType as any;
 
-    if (!(elementType as any).__twyled) {
-      StyledComponent = createStyled((p) => {
-        const propsToCSSObject = createPropsToCSSObject(t);
-        return propsToCSSObject(p);
-      });
-    }
-
-    const TwyledComponent = React.forwardRef((props, ref) => {
+    const TwyledComponent = createStyled((props) => {
       const mergedProps = {
         ...defaultVariants,
         ...props,
@@ -113,20 +86,37 @@ export const createTwyled = <Theme extends GenericTheme>(theme: Theme) => {
         }
       }
 
-      return (
-        <StyledComponent {...defaults} {...variantProps} {...props} ref={ref} />
-      );
-    }) as React.ForwardRefExoticComponent<
-      TwyledComponentProps<ElementType, MergedTheme<Theme>, Variants>
+      const fromProps = propsToCSSObject({
+        ...defaults,
+        ...variantProps,
+        ...props,
+      });
+
+      return {
+        // @ts-expect-error
+        ...defaults?.css,
+        ...fromProps,
+        ...props.css,
+      };
+    });
+
+    const propsToCSSObject = createPropsToCSSObject(theme);
+
+    TwyledComponent.displayName = options?.displayName ?? String(elementType);
+
+    return TwyledComponent as StyledComponent<
+      TwyledComponentProps<ElementType, Theme, Variants>
     >;
+  };
 
-    TwyledComponent.displayName = "TwyledComponent";
-    (TwyledComponent as any).__twyled = 1;
-
-    return TwyledComponent;
+  const createVariants = <Variants extends GenericVariants<Theme>>(
+    variants: Variants
+  ) => {
+    return variants;
   };
 
   return {
     twyled,
+    createVariants,
   };
 };

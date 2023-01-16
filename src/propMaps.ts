@@ -1,289 +1,225 @@
-import { CSSProperties } from "react";
-import { DefaultTheme } from "./defaultTheme";
-import { BaseCSSProps } from "./types";
+import { CSSObject, CSSProperties } from "@emotion/serialize";
+import { BaseCSSProps, GenericTheme } from "./types";
 
-type PropDef =
-  | keyof CSSProperties
-  | [keyof DefaultTheme, keyof CSSProperties | (keyof CSSProperties)[]];
-
-type ShorthandPropDef = Record<string, PropDef>;
-
-type ShorthandPropDefArray = {
-  shorthandArray: string[];
-};
-
-type PropDefWithSelector = {
-  selector: string;
-  property: PropDef;
-};
-
-type ShorthandPropDefWithSelector = {
-  selector: string;
-} & ShorthandPropDef;
-
-export type PropMap = Partial<
-  Record<
-    keyof BaseCSSProps<DefaultTheme>,
-    | PropDef
-    | ShorthandPropDef
-    | ShorthandPropDefArray
-    | PropDefWithSelector
-    | ShorthandPropDefWithSelector
-  >
->;
-
-const getValue = ({
-  theme,
-  slot,
-  value,
-}: {
-  theme: any;
-  slot: any;
-  value: any;
-}) => {
+const getValue = (theme, slot, value) => {
   return theme[slot][value] ?? value;
 };
 
-const single =
+const themed =
   (
-    cssProperty: any,
-    slot: any = cssProperty,
+    slot: keyof GenericTheme,
+    cssProperty: keyof CSSProperties | Array<keyof CSSProperties>,
     options?: { css?: any; concatenate?: string }
   ) =>
-  ({ value, theme }: { prop: any; value: any; theme: any }) => {
+  (value, theme) => {
     const { css, concatenate } = options ?? {};
+    if (Array.isArray(cssProperty)) {
+      let cssObject = {};
+      for (const cssProp of cssProperty) {
+        cssObject = {
+          ...cssObject,
+          [cssProp]: getValue(theme, slot, value) + (concatenate ?? ""),
+        };
+      }
+      return cssObject;
+    }
     return {
-      [cssProperty]: getValue({ slot, value, theme }) + (concatenate ?? ""),
+      [cssProperty]: getValue(theme, slot, value) + (concatenate ?? ""),
       ...css,
     };
   };
 
-const singleCustomSlot = (slot: any, cssProperty: any) =>
-  single(cssProperty, slot);
-
-const multi =
-  (themeSlot: any, cssProperties: any[], options?: { selector?: string }) =>
-  ({
-    value,
-    theme,
-    cssObject: previousCSSObject,
-  }: {
-    prop: any;
-    value: any;
-    theme: any;
-    cssObject: any;
-  }) => {
-    const { selector } = options ?? {};
-    let cssObject = { ...previousCSSObject };
-    for (const cssProp of cssProperties) {
-      if (selector) {
-        cssObject = {
-          ...cssObject,
-          [selector]: {
-            ...cssObject[selector],
-            [cssProp]: getValue({ slot: themeSlot, value, theme }),
-          },
-        };
-      }
-      //
-      else {
-        cssObject = {
-          ...cssObject,
-          [cssProp]: getValue({ slot: themeSlot, value, theme }),
-        };
-      }
-    }
-    return cssObject;
+const alias = (cssProperty: keyof CSSProperties) => (value) => {
+  return {
+    [cssProperty]: value,
   };
-
-const shorthand =
-  (cssProperty: string, obj: any) =>
-  ({ value, theme }: { prop: any; value: any; theme: any }) => {
-    let finalValue = [];
-    for (const k of Object.keys(obj)) {
-      const themeSlot = obj[k];
-      if (!themeSlot) {
-        continue;
-      }
-      const subPropValue = getValue({
-        slot: themeSlot,
-        value: value[k],
-        theme,
-      });
-      finalValue.push(subPropValue);
-    }
-    return {
-      [cssProperty]: finalValue.join(" "),
-    };
-  };
-
-const shorthandMulti =
-  (cssProperties: any[], obj: any) =>
-  (args: { prop: any; value: any; theme: any }) => {
-    let cssObject = {};
-    for (const cssProp of cssProperties) {
-      cssObject = {
-        ...cssObject,
-        ...shorthand(cssProp, obj)(args),
-      };
-    }
-    return cssObject;
-  };
-
-const borderObj = {
-  width: "borderWidth",
-  style: "borderStyle",
-  color: "borderColor",
 };
 
-export const propMap: any = {
+const custom = (cssObject: CSSObject) => () => {
+  return cssObject;
+};
+
+export const propMap: Record<keyof BaseCSSProps<GenericTheme>, any> = {
+  // LAYOUT
+  boxSizing: 1,
+  display: 1,
+  position: 1,
+  top: 1,
+  bottom: 1,
+  left: 1,
+  right: 1,
+  visibility: 1,
+  zIndex: themed("zIndex", "zIndex"),
+  overflow: 1,
+  overflowX: 1,
+  overflowY: 1,
+  objectFit: 1,
   // COLORS
-  bg: single("backgroundColor"),
-  color: single("color"),
-  fill: single("fill"),
-  // FONT
-  fontFamily: single("fontFamily"),
-  fontSize: single("fontSize"),
-  fontWeight: single("fontWeight"),
-  fontStyle: single("fontStyle"),
-  lineHeight: single("lineHeight"),
+  bg: themed("colors", "backgroundColor"),
+  // TEXT
+  color: themed("colors", "color"),
+  fontFamily: themed("fontFamily", "fontFamily"),
+  fontSize: themed("fontSize", "fontSize"),
+  fontWeight: themed("fontWeight", "fontWeight"),
+  fontStyle: 1,
+  lineHeight: themed("lineHeight", "lineHeight"),
+  textDecoration: alias("textDecorationLine"),
+  textDecorationColor: themed("colors", "textDecorationColor"),
+  textDecorationStyle: 1,
+  textDecorationThickness: 1,
+  textUnderlineOffset: 1,
+  textTransform: 1,
+  textOverflow: 1,
+  verticalAlign: 1,
+  whiteSpace: 1,
+  wordBreak: 1,
+  textAlign: 1,
+  letterSpacing: 1,
   // SPACING
-  p: single("padding"),
-  px: multi("padding", ["paddingLeft", "paddingRight"]),
-  py: multi("padding", ["paddingTop", "paddingBottom"]),
-  pl: singleCustomSlot("padding", "paddingLeft"),
-  pr: singleCustomSlot("padding", "paddingRight"),
-  pt: singleCustomSlot("padding", "paddingTop"),
-  pb: singleCustomSlot("padding", "paddingBottom"),
-  m: single("margin"),
-  mx: multi("margin", ["marginLeft", "marginRight"]),
-  my: multi("margin", ["marginTop", "marginBottom"]),
-  ml: singleCustomSlot("margin", "marginLeft"),
-  mr: singleCustomSlot("margin", "marginRight"),
-  mt: singleCustomSlot("margin", "marginTop"),
-  mb: singleCustomSlot("margin", "marginBottom"),
-  w: single("width"),
-  minW: single("minWidth"),
-  maxW: single("maxWidth"),
-  h: single("height"),
-  minH: single("minHeight"),
-  maxH: single("maxHeight"),
+  p: themed("spacing", "padding"),
+  px: themed("spacing", ["paddingLeft", "paddingRight"]),
+  py: themed("spacing", ["paddingTop", "paddingBottom"]),
+  pl: themed("spacing", "paddingLeft"),
+  pr: themed("spacing", "paddingRight"),
+  pt: themed("spacing", "paddingTop"),
+  pb: themed("spacing", "paddingBottom"),
+  m: themed("spacing", "margin"),
+  mx: themed("spacing", ["marginLeft", "marginRight"]),
+  my: themed("spacing", ["marginTop", "marginBottom"]),
+  ml: themed("spacing", "marginLeft"),
+  mr: themed("spacing", "marginRight"),
+  mt: themed("spacing", "marginTop"),
+  mb: themed("spacing", "marginBottom"),
+  w: alias("width"),
+  minW: alias("minWidth"),
+  maxW: alias("maxWidth"),
+  h: alias("height"),
+  minH: alias("minHeight"),
+  maxH: alias("maxHeight"),
   // FLEX
-  alignItems: single("alignItems"),
-  justifyContent: single("justifyContent"),
-  flexDirection: single("flexDirection"),
-  flexWrap: single("flexWrap"),
-  gap: single("gap"),
-  grow: single("flexGrow"),
-  shrink: single("flexShrink"),
-  basis: single("flexBasis"),
-  flex: single("flex"),
-  justifySelf: single("justifySelf"),
-  alignSelf: single("alignSelf"),
-  order: single("order"),
+  alignItems: 1,
+  justifyContent: 1,
+  flexDirection: 1,
+  flexWrap: 1,
+  gap: themed("spacing", "gap"),
+  grow: 1,
+  shrink: 1,
+  basis: themed("spacing", "flexBasis"),
+  flex: 1,
+  justifySelf: 1,
+  alignSelf: 1,
+  order: 1,
   // RADIUS
-  rounded: single("borderRadius"),
-  roundedLeft: multi("borderRadius", [
+  rounded: themed("borderRadius", "borderRadius"),
+  roundedLeft: themed("borderRadius", [
     "borderTopLeftRadius",
     "borderBottomLeftRadius",
   ]),
-  roundedRight: multi("borderRadius", [
+  roundedRight: themed("borderRadius", [
     "borderTopRightRadius",
     "borderBottomRightRadius",
   ]),
-  roundedTop: multi("borderRadius", [
+  roundedTop: themed("borderRadius", [
     "borderTopLeftRadius",
     "borderTopRightRadius",
   ]),
-  roundedBottom: multi("borderRadius", [
+  roundedBottom: themed("borderRadius", [
     "borderBottomLeftRadius",
     "borderBottomRightRadius",
   ]),
-  roundedTopLeft: singleCustomSlot("borderRadius", "borderTopLeftRadius"),
-  roundedTopRight: singleCustomSlot("borderRadius", "borderTopRightRadius"),
-  roundedBottomLeft: singleCustomSlot("borderRadius", "borderBottomLeftRadius"),
-  roundedBottomRight: singleCustomSlot(
-    "borderRadius",
-    "borderBottomRightRadius"
-  ),
-  // DISPLAY
-  display: single("display"),
+  roundedTopLeft: themed("borderRadius", "borderTopLeftRadius"),
+  roundedTopRight: themed("borderRadius", "borderTopRightRadius"),
+  roundedBottomLeft: themed("borderRadius", "borderBottomLeftRadius"),
+  roundedBottomRight: themed("borderRadius", "borderBottomRightRadius"),
   // BORDER
-  border: single("border", "borderWidth", { concatenate: " solid" }),
-  borderLeft: shorthand("borderLeft", borderObj),
-  borderRight: shorthand("borderRight", borderObj),
-  borderTop: shorthand("borderTop", borderObj),
-  borderBottom: shorthand("borderBottom", borderObj),
-  borderX: shorthandMulti(["borderLeft", "borderRight"], borderObj),
-  borderY: shorthandMulti(["borderTop", "borderBottom"], borderObj),
+  border: themed("borderWidth", "border", { concatenate: " solid" }),
+  borderLeft: themed("borderWidth", "borderLeft", { concatenate: " solid" }),
+  borderRight: themed("borderWidth", "borderRight", { concatenate: " solid" }),
+  borderTop: themed("borderWidth", "borderTop", { concatenate: " solid" }),
+  borderBottom: themed("borderWidth", "borderBottom", {
+    concatenate: " solid",
+  }),
+  borderX: themed("borderWidth", ["borderLeft", "borderRight"], {
+    concatenate: " solid",
+  }),
+  borderY: themed("borderWidth", ["borderTop", "borderBottom"], {
+    concatenate: " solid",
+  }),
   // width
-  borderWidth: single("borderWidth"),
-  borderLeftWidth: singleCustomSlot("borderWidth", "borderLeftWidth"),
-  borderRightWidth: singleCustomSlot("borderWidth", "borderRightWidth"),
-  borderTopWidth: singleCustomSlot("borderWidth", "borderTopWidth"),
-  borderBottomWidth: singleCustomSlot("borderWidth", "borderBottomWidth"),
-  borderXWidth: multi("borderWidth", ["borderLeftWidth", "borderRightWidth"]),
-  borderYWidth: multi("borderWidth", ["borderTopWidth", "borderBottomWidth"]),
+  borderWidth: themed("borderWidth", "borderWidth"),
+  borderLeftWidth: themed("borderWidth", "borderLeftWidth"),
+  borderRightWidth: themed("borderWidth", "borderRightWidth"),
+  borderTopWidth: themed("borderWidth", "borderTopWidth"),
+  borderBottomWidth: themed("borderWidth", "borderBottomWidth"),
+  borderXWidth: themed("borderWidth", ["borderLeftWidth", "borderRightWidth"]),
+  borderYWidth: themed("borderWidth", ["borderTopWidth", "borderBottomWidth"]),
   // style
-  borderStyle: single("borderStyle"),
-  borderLeftStyle: singleCustomSlot("borderStyle", "borderLeftStyle"),
-  borderRightStyle: singleCustomSlot("borderStyle", "borderRightStyle"),
-  borderTopStyle: singleCustomSlot("borderStyle", "borderTopStyle"),
-  borderBottomStyle: singleCustomSlot("borderStyle", "borderBottomStyle"),
-  borderXStyle: multi("borderStyle", ["borderLeftStyle", "borderRightStyle"]),
-  borderYStyle: multi("borderStyle", ["borderTopStyle", "borderBottomStyle"]),
+  borderStyle: 1,
+  borderLeftStyle: 1,
+  borderRightStyle: 1,
+  borderTopStyle: 1,
+  borderBottomStyle: 1,
+  borderXStyle: 1,
+  borderYStyle: 1,
   // color
-  borderColor: single("borderColor"),
-  borderLeftColor: singleCustomSlot("borderColor", "borderLeftColor"),
-  borderRightColor: singleCustomSlot("borderColor", "borderRightColor"),
-  borderTopColor: singleCustomSlot("borderColor", "borderTopColor"),
-  borderBottomColor: singleCustomSlot("borderColor", "borderBottomColor"),
-  borderXColor: multi("borderColor", ["borderLeftColor", "borderRightColor"]),
-  borderYColor: multi("borderColor", ["borderTopColor", "borderBottomColor"]),
+  borderColor: themed("colors", "border"),
+  borderLeftColor: themed("colors", "borderLeftColor"),
+  borderRightColor: themed("colors", "borderRightColor"),
+  borderTopColor: themed("colors", "borderTopColor"),
+  borderBottomColor: themed("colors", "borderBottomColor"),
+  borderXColor: themed("colors", ["borderLeftColor", "borderRightColor"]),
+  borderYColor: themed("colors", ["borderTopColor", "borderBottomColor"]),
   // OUTLINE
-  outline: shorthand("outline", {
-    width: "outlineWidth",
-    style: "outlineStyle",
-    color: "outlineColor",
-  }),
-  outlineWidth: single("outlineWidth"),
-  outlineStyle: single("outlineStyle"),
-  outlineColor: single("outlineColor"),
-  outlineOffset: single("outlineOffset"),
-  // CURSOR
-  cursor: single("cursor"),
+  outline: themed("borderWidth", "outline", { concatenate: " solid #000" }),
+  outlineWidth: themed("borderWidth", "outlineWidth"),
+  outlineStyle: 1,
+  outlineColor: themed("colors", "outlineColor"),
+  outlineOffset: themed("borderWidth", "outlineOffset"),
   // TRANSITION
-  transition: shorthand("transition", {
-    property: "transitionProperty",
-    duration: "transitionDuration",
-    delay: "transitionDelay",
-    timingFunction: "transitionTimingFunction",
+  transitionProperty: 1,
+  transitionDuration: 1,
+  transitionDelay: 1,
+  transitionTimingFunction: 1,
+  // LISTS
+  listStyleType: 1,
+  listStylePosition: 1,
+  // TABLES
+  borderCollapse: 1,
+  borderSpacing: 1,
+  tableLayout: 1,
+  //
+  transition: 1,
+  // HELPERS
+  truncate: custom({
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    whiteSpace: "nowrap",
   }),
-  transitionProperty: single("transitionProperty"),
-  transitionDuration: single("transitionDuration"),
-  transitionDelay: single("transitionDelay"),
-  transitionTimingFunction: single("transitionTimingFunction"),
-  // POSITION
-  position: single("position"),
-  top: single("top"),
-  bottom: single("bottom"),
-  left: single("left"),
-  right: single("right"),
-  // // VISIBILITY
-  visibility: single("visibility"),
-  // // Z-INDEX
-  zIndex: single("zIndex"),
-  // OVERFLOW
-  overflow: single("overflow"),
-  overflowX: singleCustomSlot("overflow", "overflowX"),
-  overflowY: singleCustomSlot("overflow", "overflowY"),
-  // // LISTS
-  listStyleType: single("listStyleType"),
+  //
+  opacity: 1,
+  // TRANSFORM
+  transform: 1,
+  transformOrigin: 1,
+  // INTERACTIVITY
+  accentColor: themed("colors", "accentColor"),
+  appearance: 1,
+  caretColor: themed("colors", "caretColor"),
+  cursor: 1,
+  pointerEvents: 1,
+  resize: 1,
+  scrollBehavior: 1,
+  userSelect: 1,
+  // SVG
+  fill: themed("colors", "fill"),
+  stroke: themed("colors", "stroke"),
+  strokeWidth: 1,
 };
 
 export const pseudoSelectorsMap = {
   $hover: "&:hover",
   $focus: "&:focus",
+  $focusVisible: "&:focus-visible",
+  $focusWithin: "&:focus-within",
   $active: "&:active",
   $disabled: "&:disabled",
 };

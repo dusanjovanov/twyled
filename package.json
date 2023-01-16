@@ -1,7 +1,7 @@
 {
   "name": "twyled",
-  "version": "0.0.1",
-  "description": "Tailwind + Styled System",
+  "version": "0.0.2",
+  "description": "React UI library inspired by Tailwind + Styled System",
   "main": "dist/index.cjs",
   "type": "module",
   "source": "src/index.ts",
@@ -19,15 +19,15 @@
   },
   "keywords": [
     "react",
-    "tailwind",
-    "stitches",
     "ui",
-    "components"
+    "primitives",
+    "components",
+    "tailwind",
+    "styled-system"
   ],
   "author": "Dusan Jovanov",
   "license": "MIT",
   "devDependencies": {
-    "@types/deepmerge": "^2.2.0",
     "@types/react": "^18.0.26",
     "microbundle": "^0.15.1"
   },
@@ -36,11 +36,6 @@
   },
   "dependencies": {
     "@emotion/react": "^11.10.5",
-    "@emotion/styled": "^11.10.5",
-    "@radix-ui/react-switch": "^1.0.1",
-    "@radix-ui/react-tabs": "^1.0.1",
-    "@radix-ui/react-tooltip": "^1.0.2",
-    "@stitches/react": "^1.2.8",
-    "deepmerge": "^4.2.2"
+    "@emotion/styled": "^11.10.5"
   }
 }

@@ -1,18 +1,27 @@
 # twyled
 
-Tailwind + Styled System
+React UI library. Inspired by Tailwind & Styled System
 
 > ⚠️ Still a work in progress
 
 ### Usage
 
 ```tsx
-import { createTwyled } from "twyled";
+import {
+  createTwyled,
+  defaultColorsTheme,
+  defaultFontSizeTheme,
+  defaultBorderRadiusTheme,
+} from "twyled";
 
 const { twyled } = createTwyled({
-  backgroundColor: {
+  colors: {
+    ...defaultColorsTheme,
     primary: "dodgerblue",
   },
+  fontSize: defaultFontSizeTheme,
+  spacing: defaultSpacingTheme,
+  borderRadius: defaultBorderRadiusTheme,
 });
 
 const Box = twyled("div");
