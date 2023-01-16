@@ -162,7 +162,7 @@ export const propMap: Record<keyof BaseCSSProps<GenericTheme>, any> = {
   borderXStyle: 1,
   borderYStyle: 1,
   // color
-  borderColor: themed("colors", "border"),
+  borderColor: themed("colors", "borderColor"),
   borderLeftColor: themed("colors", "borderLeftColor"),
   borderRightColor: themed("colors", "borderRightColor"),
   borderTopColor: themed("colors", "borderTopColor"),
