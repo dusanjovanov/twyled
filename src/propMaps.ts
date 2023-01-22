@@ -250,6 +250,8 @@ export const pseudoClassesMap: Record<
   $active: 1,
   $visited: 1,
   $target: 1,
+  $oddOfType: "&:nth-of-type(odd)",
+  $evenOfType: "&:nth-of-type(even)",
   $firstOfType: 1,
   $lastOfType: 1,
   $onlyOfType: 1,

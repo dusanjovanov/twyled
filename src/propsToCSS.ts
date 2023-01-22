@@ -1,8 +1,9 @@
-import { propMap } from "./propMaps";
+import { propMap, pseudoClassesMap, pseudoElementsMap } from "./propMaps";
 import {
   camelToKebab,
   isCSSProp,
   isMediaQueryProp,
+  isPseudoClassProp,
   isPseudoElementProp,
   isPseudoSelectorProp,
 } from "./utils";
@@ -29,11 +30,22 @@ export const createPropsToCSSObject = (theme: any) => {
       }
       //
       else if (isPseudoSelectorProp(prop)) {
-        let pseudoClass = "&:";
-        if (isPseudoElementProp(prop)) {
-          pseudoClass += ":";
+        let pseudoClass;
+
+        if (isPseudoClassProp(prop)) {
+          pseudoClass = pseudoClassesMap[prop];
         }
-        pseudoClass += camelToKebab(prop.slice(1));
+        //
+        else {
+          pseudoClass = pseudoElementsMap[prop];
+        }
+        if (pseudoClass === 1) {
+          pseudoClass = "&:";
+          if (isPseudoElementProp(prop)) {
+            pseudoClass += ":";
+          }
+          pseudoClass += camelToKebab(prop.slice(1));
+        }
         cssObject[pseudoClass] = propsToCSSObject(value);
         continue;
       }

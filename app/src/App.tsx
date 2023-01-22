@@ -64,7 +64,13 @@ const Box = twyled("div");
 
 const Table = twyled("table");
 
-const TableRow = twyled("tr");
+const TableRow = twyled("tr", {
+  defaults: {
+    $evenOfType: {
+      bg: "purple600",
+    },
+  },
+});
 
 const TableHeadCell = twyled("th", { defaults: { p: "2", border: "1" } });
 const TableCell = twyled("td", { defaults: { p: "2", border: "1" } });
@@ -166,8 +172,7 @@ function App() {
             </Flex>
           </Box>
           <Table
-            borderCollapse="separate"
-            borderSpacing="25px 2rem"
+            borderCollapse="collapse"
             mb="10"
             bg="red400"
             tableLayout="fixed"
@@ -179,6 +184,26 @@ function App() {
               </TableRow>
             </thead>
             <tbody>
+              <TableRow bg="gray200">
+                <TableCell>Mickey</TableCell>
+                <TableCell>Mouse</TableCell>
+              </TableRow>
+              <TableRow bg="gray200">
+                <TableCell>Mickey</TableCell>
+                <TableCell>Mouse</TableCell>
+              </TableRow>
+              <TableRow bg="gray200">
+                <TableCell>Mickey</TableCell>
+                <TableCell>Mouse</TableCell>
+              </TableRow>
+              <TableRow bg="gray200">
+                <TableCell>Mickey</TableCell>
+                <TableCell>Mouse</TableCell>
+              </TableRow>
+              <TableRow bg="gray200">
+                <TableCell>Mickey</TableCell>
+                <TableCell>Mouse</TableCell>
+              </TableRow>
               <TableRow bg="gray200">
                 <TableCell>Mickey</TableCell>
                 <TableCell>Mouse</TableCell>

@@ -216,6 +216,8 @@ export type CSSPropsPseudoClasses<Theme extends GenericTheme> = Partial<{
   $active: BaseCSSProps<Theme>;
   $visited: BaseCSSProps<Theme>;
   $target: BaseCSSProps<Theme>;
+  $oddOfType: BaseCSSProps<Theme>;
+  $evenOfType: BaseCSSProps<Theme>;
   $firstOfType: BaseCSSProps<Theme>;
   $lastOfType: BaseCSSProps<Theme>;
   $onlyOfType: BaseCSSProps<Theme>;
