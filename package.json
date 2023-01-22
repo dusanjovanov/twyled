@@ -1,6 +1,6 @@
 {
   "name": "twyled",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "React UI library inspired by Tailwind + Styled System",
   "keywords": [
     "react",

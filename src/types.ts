@@ -1,13 +1,11 @@
-import { CSSObject } from "@emotion/react";
+import { CSSObject, Interpolation } from "@emotion/react";
 import { CSSProperties } from "@emotion/serialize";
 
 type C = CSSProperties;
 
-// type CSSProp<T> = keyof T | (string & {});
-
-type P<T extends GenericTheme, S extends keyof GenericTheme> = keyof T[S];
-
-// BORDER
+type P<T extends GenericTheme, S extends keyof GenericTheme> =
+  | keyof T[S]
+  | (string & {});
 
 type BorderWidthProp<T extends GenericTheme> = P<T, "borderWidth">;
 type BorderStyleProp = C["borderStyle"];
@@ -34,8 +32,6 @@ export type BaseCSSProps<T extends GenericTheme> = Partial<{
   overflowX: C["overflowX"];
   overflowY: C["overflowY"];
   objectFit: C["objectFit"];
-  // COLOR
-  bg: P<T, "colors">;
   // TEXT
   color: P<T, "colors">;
   fontFamily: P<T, "fontFamily">;
@@ -55,6 +51,16 @@ export type BaseCSSProps<T extends GenericTheme> = Partial<{
   wordBreak: C["wordBreak"];
   textAlign: C["textAlign"];
   letterSpacing: C["letterSpacing"];
+  content: C["content"];
+  // BACKGROUND
+  bg: P<T, "colors">;
+  bgAttachment: C["backgroundAttachment"];
+  bgClip: C["backgroundClip"];
+  bgOrigin: C["backgroundOrigin"];
+  bgPosition: C["backgroundPosition"];
+  bgRepat: C["backgroundRepeat"];
+  bgSize: C["backgroundSize"];
+  bgImage: C["backgroundImage"];
   // SPACING
   p: SpacingProp<T>;
   pl: SpacingProp<T>;
@@ -90,6 +96,17 @@ export type BaseCSSProps<T extends GenericTheme> = Partial<{
   justifySelf: C["justifySelf"];
   alignSelf: C["alignSelf"];
   order: C["order"];
+  // GRID
+  gridTemplateColumns: C["gridTemplateColumns"];
+  gridColumn: C["gridColumn"];
+  gridTemplateRows: C["gridTemplateRows"];
+  gridRow: C["gridRow"];
+  gridAutoFlow: C["gridAutoFlow"];
+  gridAutoColumns: C["gridAutoColumns"];
+  gridAutoRows: C["gridAutoRows"];
+  placeContent: C["placeContent"];
+  placeItems: C["placeItems"];
+  placeSelf: C["placeSelf"];
   // RADIUS
   rounded: BorderRadiusProp<T>;
   roundedLeft: BorderRadiusProp<T>;
@@ -185,14 +202,47 @@ export type CSSPropsMediaQueries<Theme extends GenericTheme> = Partial<
   >
 >;
 
-export type CSSPropsPseudoSelectors<Theme extends GenericTheme> = {
-  $hover?: BaseCSSProps<Theme>;
-  $focus?: BaseCSSProps<Theme>;
-  $focusVisible?: BaseCSSProps<Theme>;
-  $focusWithin?: BaseCSSProps<Theme>;
-  $active?: BaseCSSProps<Theme>;
+export type CSSPropsPseudoSelectors<Theme extends GenericTheme> =
+  CSSPropsPseudoClasses<Theme> &
+    CSSPropsPseudoElements<Theme> & {
+      $dark?: BaseCSSProps<Theme>;
+    };
+
+export type CSSPropsPseudoClasses<Theme extends GenericTheme> = Partial<{
+  $hover: BaseCSSProps<Theme>;
+  $focus: BaseCSSProps<Theme>;
+  $focusVisible: BaseCSSProps<Theme>;
+  $focusWithin: BaseCSSProps<Theme>;
+  $active: BaseCSSProps<Theme>;
+  $visited: BaseCSSProps<Theme>;
+  $target: BaseCSSProps<Theme>;
+  $firstOfType: BaseCSSProps<Theme>;
+  $lastOfType: BaseCSSProps<Theme>;
+  $onlyOfType: BaseCSSProps<Theme>;
+  $empty: BaseCSSProps<Theme>;
   $disabled?: BaseCSSProps<Theme>;
-};
+  $enabled: BaseCSSProps<Theme>;
+  $checked: BaseCSSProps<Theme>;
+  $indeterminate: BaseCSSProps<Theme>;
+  $default: BaseCSSProps<Theme>;
+  $required: BaseCSSProps<Theme>;
+  $valid: BaseCSSProps<Theme>;
+  $invalid: BaseCSSProps<Theme>;
+  $inRange: BaseCSSProps<Theme>;
+  $outOfRange: BaseCSSProps<Theme>;
+  $placeholderShown: BaseCSSProps<Theme>;
+  $autofill: BaseCSSProps<Theme>;
+  $readOnly: BaseCSSProps<Theme>;
+}>;
+
+export type CSSPropsPseudoElements<Theme extends GenericTheme> = Partial<{
+  $before: BaseCSSProps<Theme>;
+  $after: BaseCSSProps<Theme>;
+  $selection: BaseCSSProps<Theme>;
+  $marker: BaseCSSProps<Theme>;
+  $placeholder: BaseCSSProps<Theme>;
+  $fileSelectorButton: BaseCSSProps<Theme>;
+}>;
 
 export type GenericTheme = Partial<{
   colors: Record<string, string>;
@@ -206,3 +256,39 @@ export type GenericTheme = Partial<{
   breakpoints: Record<string, string>;
   zIndex: Record<string, CSSObject["zIndex"]>;
 }>;
+
+export type GenericVariants<Theme extends GenericTheme> = Record<
+  string,
+  Record<string, CSSProps<Theme>>
+>;
+
+export type VariantProps<Variants> = Partial<{
+  [VariantGroup in keyof Variants]: keyof Variants[VariantGroup];
+}>;
+
+export type CSSProp<Theme extends GenericTheme> = {
+  css?: Interpolation<{ theme: Theme } & { [key: string]: any }>;
+};
+
+export type TwyledProps<
+  Theme extends GenericTheme,
+  Variants
+> = CSSProps<Theme> & VariantProps<Variants> & CSSProp<Theme>;
+
+export type TwyledComponentProps<
+  ElementType extends React.ElementType,
+  Theme extends GenericTheme,
+  Variants
+> = React.ComponentPropsWithRef<ElementType> &
+  TwyledProps<Theme, Variants> & { children?: React.ReactNode };
+
+export type TwyledOptions<Theme extends GenericTheme, Variants> = Partial<{
+  variants: Variants;
+  defaultVariants: VariantProps<Variants>;
+  defaults: CSSProps<Theme> & CSSProp<Theme>;
+  displayName: string;
+}>;
+
+export type CreateTwyledOptions<Theme extends GenericTheme> = {
+  theme: Theme;
+};

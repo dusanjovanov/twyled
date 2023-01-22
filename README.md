@@ -7,21 +7,10 @@ React UI library. Inspired by Tailwind & Styled System
 ### Usage
 
 ```tsx
-import {
-  createTwyled,
-  defaultColorsTheme,
-  defaultFontSizeTheme,
-  defaultBorderRadiusTheme,
-} from "twyled";
+import { createTwyled, defaultTheme } from "twyled";
 
-const { twyled } = createTwyled({
-  colors: {
-    ...defaultColorsTheme,
-    primary: "dodgerblue",
-  },
-  fontSize: defaultFontSizeTheme,
-  spacing: defaultSpacingTheme,
-  borderRadius: defaultBorderRadiusTheme,
+const { twyled, createVariants, ThemeProvider } = createTwyled({
+  theme: defaultTheme,
 });
 
 const Box = twyled("div");
@@ -38,7 +27,7 @@ const Flex = twyled("div", {
 </Flex>;
 
 const Button = twyled("button", {
-  variants: {
+  variants: createVariants({
     size: {
       medium: {
         fontSize: "base",
@@ -53,7 +42,7 @@ const Button = twyled("button", {
         rounded: "lg",
       },
     },
-  },
+  }),
   defaultVariants: {
     size: "medium",
   },
@@ -62,3 +51,5 @@ const Button = twyled("button", {
 <Button>Medium button</Button>;
 <Button size="large">Large button</Button>;
 ```
+
+> ℹ️ You need to wrap your component tree with ThemeProvider

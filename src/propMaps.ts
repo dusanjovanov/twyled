@@ -1,5 +1,10 @@
 import { CSSObject, CSSProperties } from "@emotion/serialize";
-import { BaseCSSProps, GenericTheme } from "./types";
+import {
+  BaseCSSProps,
+  CSSPropsPseudoClasses,
+  CSSPropsPseudoElements,
+  GenericTheme,
+} from "./types";
 
 const getValue = (theme, slot, value) => {
   return theme[slot][value] ?? value;
@@ -54,8 +59,6 @@ export const propMap: Record<keyof BaseCSSProps<GenericTheme>, any> = {
   overflowX: 1,
   overflowY: 1,
   objectFit: 1,
-  // COLORS
-  bg: themed("colors", "backgroundColor"),
   // TEXT
   color: themed("colors", "color"),
   fontFamily: themed("fontFamily", "fontFamily"),
@@ -75,6 +78,16 @@ export const propMap: Record<keyof BaseCSSProps<GenericTheme>, any> = {
   wordBreak: 1,
   textAlign: 1,
   letterSpacing: 1,
+  content: 1,
+  // COLORS
+  bg: themed("colors", "backgroundColor"),
+  bgAttachment: alias("backgroundAttachment"),
+  bgClip: alias("backgroundClip"),
+  bgOrigin: alias("backgroundOrigin"),
+  bgPosition: alias("backgroundPosition"),
+  bgRepat: alias("backgroundRepeat"),
+  bgSize: alias("backgroundSize"),
+  bgImage: alias("backgroundImage"),
   // SPACING
   p: themed("spacing", "padding"),
   px: themed("spacing", ["paddingLeft", "paddingRight"]),
@@ -109,6 +122,17 @@ export const propMap: Record<keyof BaseCSSProps<GenericTheme>, any> = {
   justifySelf: 1,
   alignSelf: 1,
   order: 1,
+  // GRID
+  gridTemplateColumns: 1,
+  gridColumn: 1,
+  gridTemplateRows: 1,
+  gridRow: 1,
+  gridAutoFlow: 1,
+  gridAutoColumns: 1,
+  gridAutoRows: 1,
+  placeContent: 1,
+  placeItems: 1,
+  placeSelf: 1,
   // RADIUS
   rounded: themed("borderRadius", "borderRadius"),
   roundedLeft: themed("borderRadius", [
@@ -215,11 +239,44 @@ export const propMap: Record<keyof BaseCSSProps<GenericTheme>, any> = {
   strokeWidth: 1,
 };
 
-export const pseudoSelectorsMap = {
-  $hover: "&:hover",
-  $focus: "&:focus",
-  $focusVisible: "&:focus-visible",
-  $focusWithin: "&:focus-within",
-  $active: "&:active",
-  $disabled: "&:disabled",
+export const pseudoClassesMap: Record<
+  keyof CSSPropsPseudoClasses<GenericTheme>,
+  string | number
+> = {
+  $hover: 1,
+  $focus: 1,
+  $focusVisible: 1,
+  $focusWithin: 1,
+  $active: 1,
+  $visited: 1,
+  $target: 1,
+  $firstOfType: 1,
+  $lastOfType: 1,
+  $onlyOfType: 1,
+  $empty: 1,
+  $disabled: 1,
+  $enabled: 1,
+  $checked: 1,
+  $indeterminate: 1,
+  $default: 1,
+  $required: 1,
+  $valid: 1,
+  $invalid: 1,
+  $inRange: 1,
+  $outOfRange: 1,
+  $placeholderShown: 1,
+  $autofill: 1,
+  $readOnly: 1,
+};
+
+export const pseudoElementsMap: Record<
+  keyof CSSPropsPseudoElements<GenericTheme>,
+  string | number
+> = {
+  $before: 1,
+  $after: 1,
+  $selection: 1,
+  $marker: 1,
+  $placeholder: 1,
+  $fileSelectorButton: 1,
 };

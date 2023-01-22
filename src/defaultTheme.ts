@@ -1,11 +1,4 @@
-import { CSSObject } from "@emotion/react";
-
-export const defaultColorsTheme = {
-  inherit: "inherit",
-  current: "currentColor",
-  transparent: "transparent",
-  white: "#fff",
-  black: "#000",
+export const defaultSlateColorTheme = {
   slate50: "#f8fafc",
   slate100: "#f1f5f9",
   slate200: "#e2e8f0",
@@ -16,6 +9,9 @@ export const defaultColorsTheme = {
   slate700: "#334155",
   slate800: "#1e293b",
   slate900: "#0f172a",
+};
+
+export const defaultGrayColorTheme = {
   gray50: "#f9fafb",
   gray100: "#f3f4f6",
   gray200: "#e5e7eb",
@@ -26,6 +22,9 @@ export const defaultColorsTheme = {
   gray700: "#374151",
   gray800: "#1f2937",
   gray900: "#111827",
+};
+
+export const defaultZincTheme = {
   zinc50: "#fafafa",
   zinc100: "#f4f4f5",
   zinc200: "#e4e4e7",
@@ -36,6 +35,9 @@ export const defaultColorsTheme = {
   zinc700: "#3f3f46",
   zinc800: "#27272a",
   zinc900: "#18181b",
+};
+
+export const defaultNeutralColorTheme = {
   neutral50: "#fafafa",
   neutral100: "#f5f5f5",
   neutral200: "#e5e5e5",
@@ -46,6 +48,9 @@ export const defaultColorsTheme = {
   neutral700: "#404040",
   neutral800: "#262626",
   neutral900: "#171717",
+};
+
+export const defaultStoneColorTheme = {
   stone50: "#fafaf9",
   stone100: "#f5f5f4",
   stone200: "#e7e5e4",
@@ -56,6 +61,9 @@ export const defaultColorsTheme = {
   stone700: "#44403c",
   stone800: "#292524",
   stone900: "#1c1917",
+};
+
+export const defaultRedColorTheme = {
   red50: "#fef2f2",
   red100: "#fee2e2",
   red200: "#fecaca",
@@ -66,6 +74,9 @@ export const defaultColorsTheme = {
   red700: "#b91c1c",
   red800: "#991b1b",
   red900: "#7f1d1d",
+};
+
+export const defaultOrangeColorTheme = {
   orange50: "#fff7ed",
   orange100: "#ffedd5",
   orange200: "#fed7aa",
@@ -76,6 +87,9 @@ export const defaultColorsTheme = {
   orange700: "#c2410c",
   orange800: "#9a3412",
   orange900: "#7c2d12",
+};
+
+export const defaultAmberColorTheme = {
   amber50: "#fffbeb",
   amber100: "#fef3c7",
   amber200: "#fde68a",
@@ -86,6 +100,9 @@ export const defaultColorsTheme = {
   amber700: "#b45309",
   amber800: "#92400e",
   amber900: "#78350f",
+};
+
+export const defaultYellowColorTheme = {
   yellow50: "#fefce8",
   yellow100: "#fef9c3",
   yellow200: "#fef08a",
@@ -96,6 +113,9 @@ export const defaultColorsTheme = {
   yellow700: "#a16207",
   yellow800: "#854d0e",
   yellow900: "#713f12",
+};
+
+export const defaultLimeColorTheme = {
   lime50: "#f7fee7",
   lime100: "#ecfccb",
   lime200: "#d9f99d",
@@ -106,6 +126,9 @@ export const defaultColorsTheme = {
   lime700: "#4d7c0f",
   lime800: "#3f6212",
   lime900: "#365314",
+};
+
+export const defaultGreenColorTheme = {
   green50: "#f0fdf4",
   green100: "#dcfce7",
   green200: "#bbf7d0",
@@ -116,6 +139,9 @@ export const defaultColorsTheme = {
   green700: "#15803d",
   green800: "#166534",
   green900: "#14532d",
+};
+
+export const defaultEmeraldCOlorTheme = {
   emerald50: "#ecfdf5",
   emerald100: "#d1fae5",
   emerald200: "#a7f3d0",
@@ -126,6 +152,9 @@ export const defaultColorsTheme = {
   emerald700: "#047857",
   emerald800: "#065f46",
   emerald900: "#064e3b",
+};
+
+export const defaultTealColorTheme = {
   teal50: "#f0fdfa",
   teal100: "#ccfbf1",
   teal200: "#99f6e4",
@@ -136,6 +165,9 @@ export const defaultColorsTheme = {
   teal700: "#0f766e",
   teal800: "#115e59",
   teal900: "#134e4a",
+};
+
+export const defaultCyanColorTheme = {
   cyan50: "#ecfeff",
   cyan100: "#cffafe",
   cyan200: "#a5f3fc",
@@ -146,6 +178,9 @@ export const defaultColorsTheme = {
   cyan700: "#0e7490",
   cyan800: "#155e75",
   cyan900: "#164e63",
+};
+
+export const defaultSkyColorTheme = {
   sky50: "#f0f9ff",
   sky100: "#e0f2fe",
   sky200: "#bae6fd",
@@ -156,6 +191,9 @@ export const defaultColorsTheme = {
   sky700: "#0369a1",
   sky800: "#075985",
   sky900: "#0c4a6e",
+};
+
+export const defaultBlueColorTheme = {
   blue50: "#eff6ff",
   blue100: "#dbeafe",
   blue200: "#bfdbfe",
@@ -166,6 +204,9 @@ export const defaultColorsTheme = {
   blue700: "#1d4ed8",
   blue800: "#1e40af",
   blue900: "#1e3a8a",
+};
+
+export const defaultIndigoColorTheme = {
   indigo50: "#eef2ff",
   indigo100: "#e0e7ff",
   indigo200: "#c7d2fe",
@@ -176,6 +217,9 @@ export const defaultColorsTheme = {
   indigo700: "#4338ca",
   indigo800: "#3730a3",
   indigo900: "#312e81",
+};
+
+export const defaultVioletColorTheme = {
   violet50: "#f5f3ff",
   violet100: "#ede9fe",
   violet200: "#ddd6fe",
@@ -186,6 +230,9 @@ export const defaultColorsTheme = {
   violet700: "#6d28d9",
   violet800: "#5b21b6",
   violet900: "#4c1d95",
+};
+
+export const defaultPurpleColorTheme = {
   purple50: "#faf5ff",
   purple100: "#f3e8ff",
   purple200: "#e9d5ff",
@@ -196,6 +243,9 @@ export const defaultColorsTheme = {
   purple700: "#7e22ce",
   purple800: "#6b21a8",
   purple900: "#581c87",
+};
+
+export const defaultFuchsiaColorTheme = {
   fuchsia50: "#fdf4ff",
   fuchsia100: "#fae8ff",
   fuchsia200: "#f5d0fe",
@@ -206,6 +256,9 @@ export const defaultColorsTheme = {
   fuchsia700: "#a21caf",
   fuchsia800: "#86198f",
   fuchsia900: "#701a75",
+};
+
+export const defaultPinkColorTheme = {
   pink50: "#fdf2f8",
   pink100: "#fce7f3",
   pink200: "#fbcfe8",
@@ -216,6 +269,9 @@ export const defaultColorsTheme = {
   pink700: "#be185d",
   pink800: "#9d174d",
   pink900: "#831843",
+};
+
+export const defaultRoseColorTheme = {
   rose50: "#fff1f2",
   rose100: "#ffe4e6",
   rose200: "#fecdd3",
@@ -226,6 +282,36 @@ export const defaultColorsTheme = {
   rose700: "#be123c",
   rose800: "#9f1239",
   rose900: "#881337",
+};
+
+export const defaultColorsTheme = {
+  inherit: "inherit",
+  current: "currentColor",
+  transparent: "transparent",
+  white: "#fff",
+  black: "#000",
+  ...defaultSlateColorTheme,
+  ...defaultGrayColorTheme,
+  ...defaultZincTheme,
+  ...defaultNeutralColorTheme,
+  ...defaultStoneColorTheme,
+  ...defaultRedColorTheme,
+  ...defaultOrangeColorTheme,
+  ...defaultAmberColorTheme,
+  ...defaultYellowColorTheme,
+  ...defaultLimeColorTheme,
+  ...defaultGreenColorTheme,
+  ...defaultEmeraldCOlorTheme,
+  ...defaultTealColorTheme,
+  ...defaultCyanColorTheme,
+  ...defaultSkyColorTheme,
+  ...defaultBlueColorTheme,
+  ...defaultIndigoColorTheme,
+  ...defaultVioletColorTheme,
+  ...defaultPurpleColorTheme,
+  ...defaultFuchsiaColorTheme,
+  ...defaultPinkColorTheme,
+  ...defaultRoseColorTheme,
 };
 
 export const defaultSpacingTheme = {
@@ -383,4 +469,17 @@ export const defaultZIndexTheme = {
   "30": "30",
   "40": "40",
   "50": "50",
+};
+
+export const defaultTheme = {
+  colors: defaultColorsTheme,
+  spacing: defaultSpacingTheme,
+  fontFamily: defaultFontFamilyTheme,
+  fontSize: defaultFontSizeTheme,
+  fontWeight: defaultFontWeightTheme,
+  lineHeight: defaultLineHeightTheme,
+  borderWidth: defaultBorderWidthTheme,
+  borderRadius: defaultBorderRadiusTheme,
+  breakpoints: defaultBreakPointsTheme,
+  zIndex: defaultZIndexTheme,
 };

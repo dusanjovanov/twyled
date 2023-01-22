@@ -1,25 +1,7 @@
-import {
-  createTwyled,
-  defaultBorderRadiusTheme,
-  defaultBorderWidthTheme,
-  defaultColorsTheme,
-  defaultFontFamilyTheme,
-  defaultFontSizeTheme,
-  defaultFontWeightTheme,
-  defaultLineHeightTheme,
-  defaultSpacingTheme,
-} from "twyled";
+import React from "react";
+import { createTwyled, defaultTheme } from "twyled";
 
-const { twyled, createVariants } = createTwyled({
-  colors: defaultColorsTheme,
-  fontSize: defaultFontSizeTheme,
-  fontFamily: defaultFontFamilyTheme,
-  spacing: defaultSpacingTheme,
-  borderWidth: defaultBorderWidthTheme,
-  borderRadius: defaultBorderRadiusTheme,
-  fontWeight: defaultFontWeightTheme,
-  lineHeight: defaultLineHeightTheme,
-});
+const { twyled, createVariants, ThemeProvider } = createTwyled(defaultTheme);
 
 const Heading1 = twyled("h1");
 
@@ -154,116 +136,117 @@ const Svg = twyled(({ className }: { className?: string }) => (
 
 function App() {
   return (
-    <Box h="100vh" bg="slate600">
-      <Heading1
-        bg="lime500"
-        h="40px"
-        textDecoration="underline"
-        textDecorationColor="purple500"
-        textDecorationStyle="wavy"
-        // textUnderlineOffset="10px"
-        textTransform="uppercase"
-        truncate
-        verticalAlign="middle"
-      >
-        Title
-      </Heading1>
-      <Box h="calc(100vh - 40px)" overflow="scroll">
-        <Box>
-          <Flex p="4" gap="2" borderY="1">
-            <Button size="small">Small</Button>
-            <Button>Medium</Button>
-          </Flex>
-          <Flex p="4" gap="2">
-            <Button variant="neutral" size="small">
-              Small
-            </Button>
-            <Button variant="neutral">Medium</Button>
-          </Flex>
-        </Box>
-        <Table
-          borderCollapse="separate"
-          borderSpacing="25px 2rem"
-          mb="10"
-          bg="red400"
-          tableLayout="fixed"
+    <ThemeProvider>
+      <Box h="100vh" bg="white">
+        <Heading1
+          bg="lime500"
+          h="40px"
+          textDecoration="underline"
+          textDecorationColor="purple500"
+          textDecorationStyle="wavy"
+          textTransform="uppercase"
+          truncate
+          verticalAlign="middle"
         >
-          <thead>
-            <TableRow bg="white">
-              <TableHeadCell>First name</TableHeadCell>
-              <TableHeadCell>Last name</TableHeadCell>
-            </TableRow>
-          </thead>
-          <tbody>
-            <TableRow bg="gray200">
-              <TableCell>Mickey</TableCell>
-              <TableCell>Mouse</TableCell>
-            </TableRow>
-          </tbody>
-        </Table>
-        <Form w="50%" bg="white" p="4" rounded="md">
-          <Box mb="2">
-            <Label htmlFor="firstName" display="block" mb="2">
-              First name
-            </Label>
-            <Input
-              id="firstName"
-              name="firstName"
-              placeholder="First name"
-              autoComplete="off"
-              w="100%"
-            />
+          Title
+        </Heading1>
+        <Box h="calc(100vh - 40px)" overflow="scroll">
+          <Box>
+            <Flex p="4" gap="2" borderY="1">
+              <Button size="small">Small</Button>
+              <Button>Medium</Button>
+            </Flex>
+            <Flex p="4" gap="2">
+              <Button variant="neutral" size="small">
+                Small
+              </Button>
+              <Button variant="neutral">Medium</Button>
+            </Flex>
           </Box>
-          <Box mb="4">
-            <Label htmlFor="country" display="block" mb="2">
-              Country
-            </Label>
-            <Select
-              id="country"
-              name="country"
-              placeholder="First name"
-              autoComplete="off"
-              defaultValue="Serbia"
-              w="100%"
-            >
-              <option>Serbia</option>
-              <option>Argentina</option>
-              <option>France</option>
-            </Select>
-          </Box>
-          <Box mb="4">
-            <Label display="block" mb="2">
-              Comment
-            </Label>
-            <TextArea
-              resize="vertical"
-              w="100%"
-              h="100px"
-              fontFamily="sans"
-              p="2"
-            />
-          </Box>
-          <Flex mb="4" gap="2">
-            <Checkbox id="terms" name="terms" accentColor="purple600" />
-            <Label htmlFor="terms">Agree to terms of service</Label>
-          </Flex>
-          <Flex justifyContent="end" gap="2">
-            <Button variant="neutral">Cancel</Button>
-            <Button>Submit</Button>
-          </Flex>
-        </Form>
-        <Svg
-          fill="purple500"
-          strokeWidth="2px"
-          stroke="green400"
-          // bg="amber300"
-          $hover={{
-            fill: "green400",
-            stroke: "purple500",
-          }}
-        />
+          <Table
+            borderCollapse="separate"
+            borderSpacing="25px 2rem"
+            mb="10"
+            bg="red400"
+            tableLayout="fixed"
+          >
+            <thead>
+              <TableRow bg="white">
+                <TableHeadCell>First name</TableHeadCell>
+                <TableHeadCell>Last name</TableHeadCell>
+              </TableRow>
+            </thead>
+            <tbody>
+              <TableRow bg="gray200">
+                <TableCell>Mickey</TableCell>
+                <TableCell>Mouse</TableCell>
+              </TableRow>
+            </tbody>
+          </Table>
+          <Form w="50%" bg="white" p="4" rounded="md">
+            <Box mb="2">
+              <Label htmlFor="firstName" display="block" mb="2">
+                First name
+              </Label>
+              <Input
+                id="firstName"
+                name="firstName"
+                placeholder="First name"
+                autoComplete="off"
+                w="100%"
+              />
+            </Box>
+            <Box mb="4">
+              <Label htmlFor="country" display="block" mb="2">
+                Country
+              </Label>
+              <Select
+                id="country"
+                name="country"
+                placeholder="First name"
+                autoComplete="off"
+                defaultValue="Serbia"
+                w="100%"
+              >
+                <option>Serbia</option>
+                <option>Argentina</option>
+                <option>France</option>
+              </Select>
+            </Box>
+            <Box mb="4">
+              <Label display="block" mb="2">
+                Comment
+              </Label>
+              <TextArea
+                resize="vertical"
+                w="100%"
+                h="100px"
+                fontFamily="sans"
+                p="2"
+              />
+            </Box>
+            <Flex mb="4" gap="2">
+              <Checkbox id="terms" name="terms" accentColor="purple600" />
+              <Label htmlFor="terms">Agree to terms of service</Label>
+            </Flex>
+            <Flex justifyContent="end" gap="2">
+              <Button variant="neutral">Cancel</Button>
+              <Button>Submit</Button>
+            </Flex>
+          </Form>
+          <Svg
+            fill="purple500"
+            strokeWidth="2px"
+            stroke="green400"
+            // bg="amber300"
+            $hover={{
+              fill: "green400",
+              stroke: "purple500",
+            }}
+          />
+        </Box>
       </Box>
-    </Box>
+    </ThemeProvider>
   );
 }
 
