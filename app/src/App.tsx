@@ -1,7 +1,9 @@
 import React from "react";
 import { createTwyled, defaultTheme } from "twyled";
 
-const { twyled, createVariants, ThemeProvider } = createTwyled(defaultTheme);
+const { twyled, createVariants, ThemeProvider } = createTwyled({
+  theme: defaultTheme,
+});
 
 const Heading1 = twyled("h1");
 
