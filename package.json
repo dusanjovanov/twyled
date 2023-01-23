@@ -1,6 +1,6 @@
 {
   "name": "twyled",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "React UI library inspired by Tailwind + Styled System",
   "keywords": [
     "react",
@@ -15,6 +15,7 @@
   "repository": {
     "url": "https://github.com/dusanjovanov/twyled"
   },
+  "homepage": "https://twyled.vercel.app/",
   "main": "dist/index.cjs",
   "type": "module",
   "source": "src/index.ts",
